@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 import './Login.css';
 
 
@@ -9,13 +10,13 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-      email: "",
+      username: "",
       password: ""
     };
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
@@ -26,17 +27,27 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    axios.post('http://localhost:8000/signin', {
+      username: this.state.username,
+      password: this.state.password
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {
     return (
       <div className="Login">
         <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="email" size="lg">
+          <Form.Group controlId="username" size="lg">
             <Form.Control
               autoFocus
-              type="email"
-              value={this.state.email}
+              type="text"
+              value={this.state.username}
               onChange={this.handleChange}
             />
           </Form.Group>

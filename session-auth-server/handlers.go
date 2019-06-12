@@ -20,6 +20,7 @@ type Credentials struct {
 }
 
 func Signin(w http.ResponseWriter, r *http.Request) {
+
 	var creds Credentials
 	// Get the JSON body and decode into credentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
@@ -61,6 +62,7 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 }
 
 func Welcome(w http.ResponseWriter, r *http.Request) {
+
 	// We can obtain the session token from the requests cookies, which come with every request
 	c, err := r.Cookie("session_token")
 	if err != nil {
@@ -92,6 +94,7 @@ func Welcome(w http.ResponseWriter, r *http.Request) {
 }
 
 func Refresh(w http.ResponseWriter, r *http.Request) {
+	
 	c, err := r.Cookie("session_token")
 	if err != nil {
 		if err == http.ErrNoCookie {
@@ -136,3 +139,4 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 		Expires: time.Now().Add(120 * time.Second),
 	})
 }
+

@@ -17,7 +17,7 @@ export default function App() {
               <Link to="/signin">Signin</Link>
             </li>
             <li>
-              <Link to="/welcome/">Welcome</Link>
+              <Link to="/welcome">Welcome</Link>
             </li>
           </ul>
         </nav>
