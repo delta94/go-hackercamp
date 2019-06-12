@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
+	"github.com/rs/cors"
 	_ "github.com/lib/pq"
 )
 
@@ -22,14 +22,16 @@ const (
 )
 
 func main() {
+	mux := http.NewServeMux()
 	// "Signin" and "Signup" are handler that we will implement
-	http.HandleFunc("/signin", Signin)
-	http.HandleFunc("/signup", Signup)
+	mux.HandleFunc("/signin", Signin)
+	mux.HandleFunc("/signup", Signup)
+	handler := cors.Default().Handler(mux)
 	// initialize our database connection
 	initDB()
 	// start the server on port 8000
 	fmt.Println("Server start at port 8000")
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	log.Fatal(http.ListenAndServe(":8000", handler))
 }
 
 func initDB() {
