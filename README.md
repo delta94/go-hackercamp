@@ -1,1 +1,1 @@
-# session-base-authentication-in-go
+# go-hackercamp
