@@ -8,11 +8,10 @@ import (
 	"fmt"
 )
 
-var db *gorm.DB //database
-
+var db *gorm.DB
 func init() {
 
-	e := godotenv.Load() //Load .env file
+	e := godotenv.Load()
 	if e != nil {
 		fmt.Print(e)
 	}
@@ -23,7 +22,7 @@ func init() {
 	dbHost := os.Getenv("db_host")
 
 
-	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s", dbHost, username, dbName, password) //Build connection string
+	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s", dbHost, username, dbName, password)
 	fmt.Println(dbUri)
 
 	conn, err := gorm.Open("postgres", dbUri)
@@ -32,10 +31,9 @@ func init() {
 	}
 
 	db = conn
-	db.Debug().AutoMigrate(&Account{}, &Contact{}) //Database migration
+	db.Debug().AutoMigrate(&Account{}, &Contact{})
 }
 
-//returns a handle to the DB object
 func GetDB() *gorm.DB {
 	return db
 }
