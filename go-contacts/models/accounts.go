@@ -1,6 +1,5 @@
 package models
 
-
 import (
 	"github.com/dgrijalva/jwt-go"
 	u "go-contacts/utils"

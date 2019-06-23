@@ -15,6 +15,7 @@ type Contact struct {
 
 /*
  This struct function validate the required parameters sent through the http request body
+
 returns message and true if the requirement is met
 */
 func (contact *Contact) Validate() (map[string] interface{}, bool) {
@@ -69,3 +70,4 @@ func GetContacts(user uint) ([]*Contact) {
 
 	return contacts
 }
+
