@@ -8,16 +8,13 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"os"
 	"context"
-	"fmt"
 )
 
 var JwtAuthentication = func(next http.Handler) http.Handler {
-
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		notAuth := []string{"/api/user/new", "/api/user/login"} //List of endpoints that doesn't require auth
 		requestPath := r.URL.Path //current request path
-
 		//check if request does not need authentication, serve the request if it doesn't need it
 		for _, value := range notAuth {
 
@@ -26,9 +23,10 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 				return
 			}
 		}
-
+		
 		response := make(map[string] interface{})
 		tokenHeader := r.Header.Get("Authorization") //Grab the token from the header
+		
 
 		if tokenHeader == "" { //Token is missing, returns with error code 403 Unauthorized
 			response = u.Message(false, "Missing auth token")
@@ -71,7 +69,7 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 		}
 
 		//Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
-		fmt.Printf("User %v", tk.UserId) //Useful for monitoring
+		// fmt.Printf("User %v", tk.UserId) //Useful for monitoring
 		ctx := context.WithValue(r.Context(), "user", tk.UserId)
 		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r) //proceed in the middleware chain!

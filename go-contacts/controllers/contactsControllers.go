@@ -13,6 +13,7 @@ var CreateContact = func(w http.ResponseWriter, r *http.Request) {
 	contact := &models.Contact{}
 
 	err := json.NewDecoder(r.Body).Decode(contact)
+	
 	if err != nil {
 		u.Respond(w, u.Message(false, "Error while decoding request body"))
 		return
